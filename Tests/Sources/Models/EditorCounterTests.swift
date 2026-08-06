@@ -172,6 +172,7 @@ import LineEnding
     }
     
     
+    @available(macOS 26, *)
     @Test func selectedLineCountUsesLineRangeCalculator() async throws {
         
         let string = "a\n🐕b\nc"
