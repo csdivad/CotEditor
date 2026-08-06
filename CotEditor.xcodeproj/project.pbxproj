@@ -212,6 +212,7 @@
 				2A6F0D541B5500E100C2D03C /* Resources */,
 				2A94FC7A1BE225E900B454A8 /* Copy Command-Line Tools */,
 				2A6F0DFD1B5500E100C2D03C /* Frameworks */,
+				2B6F7E4D30E102A30049F0B8 /* Embed Syntax Framework */,
 				2BF32A522F06996600A1C703 /* Remove Tree-sitter Bundles */,
 			);
 			buildRules = (
@@ -382,6 +383,15 @@
 			shellPath = /bin/sh;
 			shellScript = (
 				"\"$BUILT_PRODUCTS_DIR/SyntaxMapBuilder\" \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"",
+				"",
+			);
+		};
+		2B6F7E4D30E102A30049F0B8 /* Embed Syntax Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			name = "Embed Syntax Framework";
+			shellPath = /bin/sh;
+			shellScript = (
+				"\"/bin/sh\" \"$SRCROOT/Scripts/embedSyntaxFramework.sh\"",
 				"",
 			);
 		};
