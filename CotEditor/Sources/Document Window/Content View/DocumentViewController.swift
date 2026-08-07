@@ -205,11 +205,11 @@ final class DocumentViewController: NSSplitViewController, ThemeChanging, NSTool
         
         super.viewDidAppear()
         
-        // -> Delay the parser setup so that the tree-sitter grammars are neither
-        //    loaded nor run while the window is still being displayed.
+        // -> Set the parser up only once the window is on screen, so that the
+        //    tree-sitter grammars are neither loaded nor run during launch.
         if self.syntaxSetupTask == nil {
             self.syntaxSetupTask = Task { @MainActor [weak self] in
-                try? await Task.sleep(for: .milliseconds(300))
+                await Task.yield()
                 guard let self else { return }
                 self.document.syntaxController.setupParser()
             }
