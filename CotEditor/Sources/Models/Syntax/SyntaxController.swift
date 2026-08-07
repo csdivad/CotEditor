@@ -154,7 +154,7 @@ extension NSAttributedString.Key {
     ///   - delta: The change in length.
     func invalidate(in editedRange: NSRange, changeInLength delta: Int) {
         
-        assert(self.isReady)
+        guard self.isReady else { return }
         
         self.highlightParseTask?.cancel()
         self.highlightParseTask = nil
@@ -182,7 +182,7 @@ extension NSAttributedString.Key {
     /// Applies a short debounce before parsing to allow the text system to settle.
     func parseIfNeeded() {
         
-        assert(self.isReady)
+        guard self.isReady else { return }
         
         self.highlightIfNeeded(withDelay: true)
         self.updateOutline(withDelay: true)
@@ -192,7 +192,10 @@ extension NSAttributedString.Key {
     /// Re-parses the entire document immediately.
     func parseAll() {
         
-        assert(self.isReady)
+        guard self.isReady else {
+            self.setupParser()
+            return
+        }
         
         self.invalidRanges.update(editedRange: self.textStorage.range)
         

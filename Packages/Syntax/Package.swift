@@ -9,7 +9,7 @@ let package = Package(
         .macOS(.v15),
     ],
     products: [
-        .library(name: "Syntax", targets: [
+        .library(name: "Syntax", type: .dynamic, targets: [
             "SyntaxFormat",
             "SyntaxParsers",
         ]),

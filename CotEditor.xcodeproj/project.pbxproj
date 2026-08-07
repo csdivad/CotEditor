@@ -21,6 +21,9 @@
 /* Begin PBXBuildFile section */
 		2A1380092C22E9B500093BF3 /* EditorCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2A1380082C22E9B500093BF3 /* EditorCore */; };
 		2A644BC92F0665A700E1975F /* Syntax in Frameworks */ = {isa = PBXBuildFile; productRef = 2A644BC82F0665A700E1975F /* Syntax */; };
+		2B6F7E4F30E102A30049F0B8 /* Syntax in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 2A644BC82F0665A700E1975F /* Syntax */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2B6F7E5130E102A30049F0B8 /* EditorCore in Frameworks */ = {isa = PBXBuildFile; productRef = 2B6F7E5030E102A30049F0B8 /* EditorCore */; };
+		2B6F7E5330E102A30049F0B8 /* Syntax in Frameworks */ = {isa = PBXBuildFile; productRef = 2B6F7E5230E102A30049F0B8 /* Syntax */; };
 		2ABB27D22C38268300AFCD0B /* Numerics in Frameworks */ = {isa = PBXBuildFile; productRef = 2ABB27CD2C3824DE00AFCD0B /* Numerics */; };
 		2ABB27D62C382AD400AFCD0B /* MacUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2ABB27D52C382AD400AFCD0B /* MacUI */; };
 		2ACD02BF22A87F0400893051 /* ColorCode in Frameworks */ = {isa = PBXBuildFile; productRef = 2ACD02BE22A87F0400893051 /* ColorCode */; };
@@ -52,6 +55,14 @@
 			files = (
 			);
 			name = "Copy Command-Line Tools";
+		};
+		2B6F7E4E30E102A30049F0B8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstSubfolder = Frameworks;
+			files = (
+				2B6F7E4F30E102A30049F0B8 /* Syntax in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -147,6 +158,8 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				2ABB27D22C38268300AFCD0B /* Numerics in Frameworks */,
+				2B6F7E5130E102A30049F0B8 /* EditorCore in Frameworks */,
+				2B6F7E5330E102A30049F0B8 /* Syntax in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -212,6 +225,7 @@
 				2A6F0D541B5500E100C2D03C /* Resources */,
 				2A94FC7A1BE225E900B454A8 /* Copy Command-Line Tools */,
 				2A6F0DFD1B5500E100C2D03C /* Frameworks */,
+				2B6F7E4E30E102A30049F0B8 /* Embed Frameworks */,
 				2BF32A522F06996600A1C703 /* Remove Tree-sitter Bundles */,
 			);
 			buildRules = (
@@ -256,6 +270,8 @@
 			name = Tests;
 			packageProductDependencies = (
 				2ABB27CD2C3824DE00AFCD0B /* Numerics */,
+				2B6F7E5030E102A30049F0B8 /* EditorCore */,
+				2B6F7E5230E102A30049F0B8 /* Syntax */,
 			);
 			productName = CotEditorTests;
 			productReference = 2A7380252CAD911F00E870E5 /* Tests.xctest */;
@@ -381,7 +397,7 @@
 			);
 			shellPath = /bin/sh;
 			shellScript = (
-				"\"$BUILT_PRODUCTS_DIR/SyntaxMapBuilder\" \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"",
+				"DYLD_FRAMEWORK_PATH=\"$BUILT_PRODUCTS_DIR/PackageFrameworks:$BUILT_PRODUCTS_DIR/Frameworks:${DYLD_FRAMEWORK_PATH:-}\" \"$BUILT_PRODUCTS_DIR/SyntaxMapBuilder\" \"$SCRIPT_INPUT_FILE_0\" \"$SCRIPT_OUTPUT_FILE_0\"",
 				"",
 			);
 		};
@@ -1109,6 +1125,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2AAAE6E326DB82F800C5F0AC /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		2B6F7E5030E102A30049F0B8 /* EditorCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EditorCore;
+		};
+		2B6F7E5230E102A30049F0B8 /* Syntax */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Syntax;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

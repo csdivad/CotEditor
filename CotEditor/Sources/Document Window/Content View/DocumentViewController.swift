@@ -66,6 +66,7 @@ final class DocumentViewController: NSSplitViewController, ThemeChanging, NSTool
     private let splitState = SplitState()
     
     private weak var focusedChild: EditorViewController?
+    private var syntaxSetupTask: Task<Void, Never>?
     
     private var themeName: String?
     private var theme: Theme?  { self.focusedTextView?.theme }
@@ -103,6 +104,7 @@ final class DocumentViewController: NSSplitViewController, ThemeChanging, NSTool
     
     
     isolated deinit {
+        self.syntaxSetupTask?.cancel()
         NotificationCenter.default.removeObserver(self, name: NSTextStorage.didProcessEditingNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: EditorTextView.DidLiveChangeSelectionMessage.name, object: nil)
     }
@@ -132,9 +134,6 @@ final class DocumentViewController: NSSplitViewController, ThemeChanging, NSTool
                 case .space: true
             }
         }
-        
-        // start parsing
-        self.document.syntaxController.setupParser()
         
         NotificationCenter.default.addObserver(self, selector: #selector(textStorageDidProcessEditing),
                                                name: NSTextStorage.didProcessEditingNotification,
@@ -199,6 +198,22 @@ final class DocumentViewController: NSSplitViewController, ThemeChanging, NSTool
             UserDefaults.standard.publisher(for: .showIndentGuides, initial: true)
                 .sink { [weak self] in self?.showsIndentGuides = $0 },
         ]
+    }
+    
+    
+    override func viewDidAppear() {
+        
+        super.viewDidAppear()
+        
+        // -> Set the parser up only once the window is on screen, so that the
+        //    tree-sitter grammars are neither loaded nor run during launch.
+        if self.syntaxSetupTask == nil {
+            self.syntaxSetupTask = Task { @MainActor [weak self] in
+                await Task.yield()
+                guard let self else { return }
+                self.document.syntaxController.setupParser()
+            }
+        }
     }
     
     
